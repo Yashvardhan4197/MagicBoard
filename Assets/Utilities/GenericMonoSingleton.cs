@@ -1,18 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
-public class GenericMonoSingleton : MonoBehaviour
+public class GenericMonoSingleton<T> : MonoBehaviour where T:GenericMonoSingleton<T>
 {
-    // Start is called before the first frame update
-    void Start()
+    private static T instance;
+    public static T Instance {  get { return instance; } }
+    private void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (instance == null)
+        {
+            instance = (T)this;
+        }
+        else
+        {
+            Destroy(instance.gameObject);
+        }
     }
 }
